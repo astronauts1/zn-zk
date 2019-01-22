@@ -1,0 +1,11 @@
+zookeeper:
+  host: 127.0.0.1:2181
+  #host: 188.131.172.54:2181
+  namespace: cocoding-im
+  timeout: 15000
+  retry-times: 3
+  base-sleep-ms: 5000
+
+logging:
+  level:
+    com.tber.anzk: info
