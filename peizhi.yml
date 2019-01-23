@@ -1,0 +1,335 @@
+#日志位置
+logging:
+  file: /data/appusr/ermas/logs/ermasBatch
+  level:
+    root: info
+
+#elastic-job定义
+elastic-job:
+  regCenter:
+    serverList: 10.163.1.120:2181
+    namespace: elasticJobForErmasBatch_test_xu
+  ictJob:
+    jobName: ictJob
+    desc: 催收大批
+    cron: 59 36 23 29 1 ?
+#    shardingTotalCount: 3
+#    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  caseAssignJob:
+    jobName: caseAssignJob
+    desc: 分案小批
+    cron: 0 15 10 * * ? 2098
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  qaJob:
+    jobName: qaJob
+    desc: 质检跑批
+    cron: 0 30 17 29 1 ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  userRecordJob:
+    jobName: userRecordJob
+    desc: 用户状态每天记录
+    cron: 0 20 0 * * ?
+    shardingTotalCount: 1
+    interval: 1, 1, 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  caseHistoryJob:
+    jobName: caseHistoryJob
+    desc: 案件历史批
+    cron: 50 10 17 29 1 ?
+    shardingTotalCount: 3
+    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+  syncDataJob:
+    jobName: syncDataJob
+    desc: 同步数据批
+    cron: 50 10 14 29 1 ?
+    shardingTotalCount: 3
+    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+  syncMainDataJob:
+    jobName: syncMainDataJob
+    desc: 同步主要数据批
+    cron: 0 0 2 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  syncCcsAideDataJob:
+    jobName: syncCcsAideDataJob
+    desc: 同步辅助数据批
+    cron: 0 5 2 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  scatterJob:
+    jobName: scatterJob
+    desc: 打散重分跑批
+    cron: 0 0 0 29 1 ?
+    shardingTotalCount: 3
+    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+  syncScoreJob:
+    jobName: syncScoreJob
+    desc: 同步评分卡信息
+    cron: 0 5 3 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  sendScoreDataJob:
+    jobName: sendScoreDataJob
+    desc: 发送评分卡数据
+    cron: 0 5 3 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  sendCallMailJob:
+    jobName: sendCallMailJob
+    desc: 发送外呼人员信息邮件
+    cron: 0 5 7 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  syncNewCcsDataJob:
+    jobName: syncNewCcsDataJob
+    desc: 同步新核心产品数据
+    cron: 0 5 7 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  coWorkJob:
+    jobName: coWorkJob
+    desc: 委外案件处理
+    cron: 0 5 2 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  mobJob:
+    jobName: mobJob
+    desc: 计算案件账龄
+    cron: 0 15 6 * * ?
+    shardingTotalCount: 3
+    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+  leaveJob:
+    jobName: leaveJob
+    desc: 请假批
+    cron: 0 6 0 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  billReduceJob:
+    jobName: billReduceJob
+    desc: 案件减免批
+    cron: 50 10 17 * * ?
+    shardingTotalCount: 3
+    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+  customerCallJob:
+    jobName: customerCallJob
+    desc: 预呼批
+    cron: 0 0 8 * * ?
+    shardingTotalCount: 1
+    interval: 1, 1, 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  huiyuCallJob:
+    jobName: customerCallJob
+    desc: 慧语预呼批
+    cron: 0 15 10 * * ? 2095
+    shardingTotalCount: 1
+    interval: 1, 1, 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  smsTaskJob:
+    jobName: smsTaskJob
+    desc: 短信定时任务
+    cron: 0 0 7 * * ?
+    shardingTotalCount: 3
+    shardingItemParameters: 0=0|1|2,1=3|4|5,2=6|7|8|9
+  dynamicAddJob:
+    jobName: dynamicAddJob
+    desc: 定时添加批量短信
+    cron: 0 30 12 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+  smsTaskStatus:
+    jobName: smsTaskStatusJob
+    desc: 短信状态任务
+    cron: 0 30 9,13 * * ?
+    shardingTotalCount: 1
+    shardingItemParameters: 0=0|1|2|3|4|5|6|7|8|9
+#数据库连接配置
+datasource:
+  ccs:
+    url: jdbc:mysql://10.152.17.85:3306/ccsdb_batch_dev?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username:  dev
+    password:  dev123
+#    url: jdbc:mysql://10.143.81.34:3306/ccsdb?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+#    username: sun_select
+#    password: fQhPQeLd1LE6FqSN
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 32
+    minIdle: 32
+    maxActive: 64
+    maxWait: 600000
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    validationQuery: SELECT 'X'
+    validationQueryTimeout: 10
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+  ermas:
+    url: jdbc:mysql://10.152.17.85:3306/ermasdb_batch_data?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: dev
+    password: dev123
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 32
+    minIdle: 32
+    maxActive: 512
+    maxWait: 600000
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    validationQuery: SELECT 'X'
+    validationQueryTimeout: 10
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+  data:
+    url: jdbc:mysql://10.152.18.51:3308/redline_dev?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: bigdata_r
+    password: 572D5ECF1D5DF2BADC9
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 32
+    minIdle: 32
+    maxActive: 512
+    maxWait: 600000
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    validationQuery: SELECT 'X'
+    validationQueryTimeout: 10
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+#ermas相关配置
+ermas:
+  enableRedisAppCache: true
+  jobsConfig:
+    default:
+      interval: 1, 1, 1
+    ict:
+      interval: 256, 8, 256
+    qa:
+      interval: 1, 1, 1
+    caseHistory:
+      interval: 256, 8, 256
+    syncData:
+      interval: 256, 256, 256
+    syncMainData:
+      interval: 512, 16, 32
+    syncCcsAideData:
+      interval: 2048, 16, 64
+    scatter:
+      interval: 1, 1, 10
+    syncScore:
+      interval: 256, 256, 256
+    sendScoreData:
+      interval: 256, 256, 256
+    sendCallMailJob:
+      interval: 256, 256, 256
+    syncNewCcsDataJob:
+      interval: 256, 256, 256
+    mob:
+      interval: 256, 256, 256
+    leave:
+      interval: 1, 1, 1
+    billReduce:
+      interval: 256, 256, 256
+    customerCall:
+      interval: 1, 1, 1
+    huiyuCallJob:
+      interval: 1, 1, 1
+    linkManCall:
+      interval: 1, 1, 1
+    smsTask:
+      interval: 25, 8, 25
+    smsTaskStatus:
+      interval: 25, 8, 25
+  regCenter:
+    serverList: 10.163.1.120:2181
+    namespace: ermasConfig_test_xu
+  email:
+    enabled: true
+    hostName: smtp.139.com
+    smtpPort: 25
+    userName: 15001285968@139.com
+    password: gy15001285968gy
+    SSLOnConnect: true
+    from: 15001285968@139.com
+#    enabled: true
+#    hostName: smtp.mxhichina.com
+#    smtpPort: 25
+#    userName: system@xlizy.com
+#    password: lxl15652341246L
+#    SSLOnConnect: true
+#    from: system@xlizy.com
+    group:
+      developers: gaoyun@gomeholdings.com
+      olg: gaoyun@gomeholdings.com
+  interfaceAddr:
+    BUSSINESSDATE: http://ermas-n2.gomemyf.com/
+    TNRMYCheOverdueRepayCalc: http://10.143.117.202:8888/TNRMYCheOverdueRepayCalc
+    TNQLLoanPMTScheByContrID: http://10.143.117.202:8888/TNQLLoanPMTScheByContrID
+    TNQLLoanPMTScheByContrID_IOUS: http://10.143.92.200:18889/TNQLLoanPMTScheByContrID
+    sendSms:
+      httpHead: http://
+      sendIp: 10.159.13.12,10.159.13.13,10.159.13.14
+      api: /api/ # 恒天短信发送
+      sendUrl: /send_sms # 恒天短信发送
+      queryUrl: /query_sms_result # 恒天短信查询
+      loginName: admin
+      passWord: admin
+  newCcs:
+    localSaveDir: d:/newCcsFile/
+    ftpHost: 10.163.1.152
+    ftpPort: 22
+    ftpUserName: cuishou
+    ftpPassWord: sQf30?7Wr2
+    ftpLoanDir: /data/collection/
+spring:
+  redis:
+    host: 10.152.17.85
+    password: 123jjniss
+    port: 6379
+    database: 4
+    pool:
+      max-active: -1
+  batch:
+    job:
+      names: none
+      enabled: true
+    table-prefix: ERMAS_
+distributedLock:
+  zkList: 10.152.17.85:2181
+  node: /ermasBatch/distributedLock/
+  sleepTime: 1000
+  maxRetries: 3
+sms:
+  url: http://10.143.117.21:9080/sms/sms/api/smsSend/
+  key: kdepXJtKvZCahBMuPv4Z
+  userId: b057720f-2c2e-408e-b2c3-2a4030148c8e
+hengTian:
+  url: http://10.159.13.21:84/IVRCallOutHandler.ashx
+  name: guomei
+  pwd: guomei123456
+huiYu:
+  apiUrl: https://api.zihuitong.com.cn/
+  #批量导入
+  batchUrl: open-api/batch
+  #批量查询
+  queryListUrl: open-api/getcalllist
+  #单查询
+  queryDetailUrl: open-api/getcalldetail
+  #
+  appcode: guomeijinrong
+  #MD5 秘钥
+  appkey: gmv6iN4l7COI3rbFsw47ktaJ89PX9tvTP4MPH
+  #账号id，可传的值在开户时告知
+  accountid: 186
+  #模板ID
+  wordstemplateid: 10381
+  #机器人ID
+  robotid: 326
+
+sendScoreData:
+  url: http://10.152.18.30:10001/redline/restful/scores/queryScore
+  callExcelPath: d:/newCcsFile/
+  queryDataCompleteUrl: http://10.143.90.240:10001/redline/restful/scores/queryBatch
