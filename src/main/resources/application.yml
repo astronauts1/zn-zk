@@ -9,3 +9,8 @@ zookeeper:
 logging:
   level:
     com.tber.anzk: info
+
+spring:
+  redis:
+    host: 188.131.172.54
+    port: 6379

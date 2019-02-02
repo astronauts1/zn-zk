@@ -1,6 +1,7 @@
 package com.tber.anzk.thread;
 
-import com.tber.anzk.lock.DistributedLock;
+import com.tber.anzk.lock.entity.IDistributeLock;
+import com.tber.anzk.lock.entity.ZkDistributedLockImpl;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -11,14 +12,16 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class WriteThreadDemo implements Runnable{
 
-    private final DistributedLock lock;
+    private final IDistributeLock lock;
 
     private final CountDownLatch latch;
 
-    public WriteThreadDemo(DistributedLock lock,CountDownLatch latch) {
+    public WriteThreadDemo(ZkDistributedLockImpl lock, CountDownLatch latch) {
         this.lock = lock;
         this.latch = latch;
     }
+
+
 
 
     @Override

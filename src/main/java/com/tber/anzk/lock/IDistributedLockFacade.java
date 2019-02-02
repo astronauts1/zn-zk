@@ -1,5 +1,7 @@
 package com.tber.anzk.lock;
 
+import com.tber.anzk.lock.entity.ZkDistributedLockImpl;
+
 /**
  * @author jianglu email:ansndx@163.com
  */
@@ -10,14 +12,14 @@ public interface IDistributedLockFacade {
      * @param businessId 业务
      * @return 锁
      */
-    DistributedLock getReadLock(String businessId);
+    ZkDistributedLockImpl getReadLock(String businessId);
 
     /**
      * 获取写锁
      * @param businessId 业务
      * @return 锁
      */
-    DistributedLock getWriteLock(String businessId);
+    ZkDistributedLockImpl getWriteLock(String businessId);
 
 
 }

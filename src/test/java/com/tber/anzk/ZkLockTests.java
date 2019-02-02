@@ -1,13 +1,13 @@
 package com.tber.anzk;
 
-import com.tber.anzk.lock.DistributedLock;
-import com.tber.anzk.lock.IDistributedLockFacade;
-import com.tber.anzk.thread.ReadThreadDemo;
-import com.tber.anzk.thread.WriteThreadDemo;
+import com.tber.anzk.lock.entity.IDistributeLock;
+import com.tber.anzk.lock.entity.RedisDistributedLockImpl;
+import com.tber.anzk.thread.FairThreadDemo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.CountDownLatch;
@@ -20,26 +20,34 @@ import java.util.concurrent.CountDownLatch;
 public class ZkLockTests {
 
 
+//    @Autowired
+//    IDistributedLockFacade distributedLockFacade;
+
     @Autowired
-    IDistributedLockFacade distributedLockFacade;
+    RedisTemplate<String,Object> redisTemplate;
 
     @Test
     public void zkTest() {
-        DistributedLock readLock = distributedLockFacade.getReadLock("demo");
+//        ZkDistributedLockImpl readLock = distributedLockFacade.getReadLock("demo");
+//
+//        ZkDistributedLockImpl writeLock = distributedLockFacade.getWriteLock("demo");
 
-        DistributedLock writeLock = distributedLockFacade.getWriteLock("demo");
+
+        IDistributeLock redisLock = new RedisDistributedLockImpl(redisTemplate,"redis_lock",30000L);
 
         final CountDownLatch latch = new CountDownLatch(3);
 
 
-        Thread  readThreadDemo1 = new Thread(new ReadThreadDemo(readLock,latch),"read 111");
+        Thread  readThreadDemo1 = new Thread(new FairThreadDemo(redisLock,latch),"redis 111");
 
-        Thread  readThreadDemo2 = new Thread(new ReadThreadDemo(readLock,latch),"read 222");
+        Thread  readThreadDemo2 = new Thread(new FairThreadDemo(redisLock,latch),"redis 222");
 
-        Thread writeThreadDemo = new Thread(new WriteThreadDemo(writeLock,latch),"write 111");
+
+        Thread  readThreadDemo3 = new Thread(new FairThreadDemo(redisLock,latch),"redis 333");
+
         readThreadDemo1.start();
-        writeThreadDemo.start();
         readThreadDemo2.start();
+        readThreadDemo3.start();
         try {
             latch.await();
         } catch (InterruptedException e) {

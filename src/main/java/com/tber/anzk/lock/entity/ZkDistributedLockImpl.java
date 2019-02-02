@@ -1,6 +1,5 @@
-package com.tber.anzk.lock;
+package com.tber.anzk.lock.entity;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
@@ -10,26 +9,32 @@ import org.apache.curator.framework.recipes.locks.InterProcessMutex;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class DistributedLock {
+public class ZkDistributedLockImpl implements IDistributeLock{
     /**
      * 锁实体
      */
     private final InterProcessMutex lock;
 
 
-    public void acquire(){
+    @Override
+    public boolean acquire(){
         try {
             lock.acquire();
+            return true;
         } catch (Exception e) {
             log.error("锁获取异常!!");
+            return false;
         }
     }
 
-    public void release(){
+    @Override
+    public boolean release(){
         try {
             lock.release();
+            return true;
         } catch (Exception e) {
             log.error("锁释放异常!");
+            return false;
         }
     }
 }

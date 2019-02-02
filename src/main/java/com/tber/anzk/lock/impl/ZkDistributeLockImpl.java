@@ -1,7 +1,7 @@
 package com.tber.anzk.lock.impl;
 
 import com.tber.anzk.config.ZkCenter;
-import com.tber.anzk.lock.DistributedLock;
+import com.tber.anzk.lock.entity.ZkDistributedLockImpl;
 import com.tber.anzk.lock.IDistributedLockFacade;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -27,18 +27,18 @@ public class ZkDistributeLockImpl implements IDistributedLockFacade {
     }
 
     @Override
-    public DistributedLock getReadLock(String businessId) {
+    public ZkDistributedLockImpl getReadLock(String businessId) {
         String path = ZK_LOCK_PATH + businessId;
         CuratorFramework zkClient = zkCenter.getZkClient();
         InterProcessMutex lock = new InterProcessReadWriteLock(zkClient,path+"/read-write-lock").readLock();
         log.info("创建锁完成");
-        return new DistributedLock(lock);
+        return new ZkDistributedLockImpl(lock);
     }
 
     @Override
-    public DistributedLock getWriteLock(String businessId) {
+    public ZkDistributedLockImpl getWriteLock(String businessId) {
         String path = ZK_LOCK_PATH + businessId;
         CuratorFramework zkClient = zkCenter.getZkClient();
-        return new DistributedLock(new InterProcessReadWriteLock(zkClient,path+"/read-write-lock").writeLock());
+        return new ZkDistributedLockImpl(new InterProcessReadWriteLock(zkClient,path+"/read-write-lock").writeLock());
     }
 }

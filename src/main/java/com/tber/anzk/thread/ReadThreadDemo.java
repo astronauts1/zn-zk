@@ -1,6 +1,7 @@
 package com.tber.anzk.thread;
 
-import com.tber.anzk.lock.DistributedLock;
+import com.tber.anzk.lock.entity.IDistributeLock;
+import com.tber.anzk.lock.entity.ZkDistributedLockImpl;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -11,18 +12,16 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 public class ReadThreadDemo implements Runnable {
 
-    private final DistributedLock lock;
+    private final IDistributeLock lock;
     private final CountDownLatch latch;
 
-    public ReadThreadDemo(DistributedLock lock,CountDownLatch latch) {
+    public ReadThreadDemo(ZkDistributedLockImpl lock, CountDownLatch latch) {
         this.lock = lock;
         this.latch = latch;
     }
 
     @Override
     public void run() {
-
-
         lock.acquire();
         log.info(Thread.currentThread().getName()+" read read read....ok");
         try {
